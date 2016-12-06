@@ -1,0 +1,22 @@
+
+<h1 class="headline"> Eric的学习分享空间</h1>
+
+<style type="text/css">
+
+h1.headline{text-align: center;
+	color: gold;
+	margin-bottom: 20px;
+	font-size: 2em;
+}	
+
+
+
+</style>
+
+<nav>
+  <ul>
+    <% for (var i in theme.menu){ %>
+      <li><a href="<%- theme.menu[i] %>"><%= i %></a></li>
+    <% } %>
+  </ul>
+</nav>
