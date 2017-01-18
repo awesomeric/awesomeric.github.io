@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="hi">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="唐与灿">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="一个简单的弹出层设计思路"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="hi" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="前端唐小胖"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>一个简单的弹出层设计思路 - 前端唐小胖</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">前端唐小胖</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                主页
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about">
+                            
+                                关于我
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/awesomeric">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.tangyc.top/images/home-bg.jpeg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>一个简单的弹出层设计思路</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-11-16
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/DOM/">#DOM</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>转载需注明：<strong>前端唐小胖</strong></p>
+<p>最近在做项目的时候，客户需要做一个弹出层来展示视频。目前有很多弹出层的插件，如bootstrap的modal.js以及十分有名的layer插件。但是他们或多或少都与自己的框架绑定在了一起，调用的时候有时候需要定制化的需求又需要去改变框架的css规则和js。于是就有了今天这篇文章，让我们自己来设计一个弹出层插件，一是让自己可以熟悉一下实现的原理，二是以后可以进行二次封装来面对自己的定制化需求。</p>
+<h3 id="好，我们开始吧。"><a href="#好，我们开始吧。" class="headerlink" title="好，我们开始吧。"></a>好，我们开始吧。</h3><p>1.首先明确设计思路。我们可以<strong>用html来进行结构的语义化表达，css来提供表现，js来监听用户行为。</strong></p>
+<p><strong><a href="https://github.com/awesomeric/modalbox" target="_blank" rel="external">Github 下载</a></strong></p>
+<p><img src="http://www.tangyc.top/images/modalbox.png" alt="enter image description here"></p>
+<h3 id="首先制作html页面，直接看代码。"><a href="#首先制作html页面，直接看代码。" class="headerlink" title="首先制作html页面，直接看代码。"></a>首先制作html页面，直接看代码。</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"Yourcontainer"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"btn btn-info btn-lg show-layer"</span> <span class="attr">data-show-layer</span>=<span class="string">"hw-layer"</span> &gt;</span>点击弹出层<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"hw-overlay"</span> <span class="attr">id</span>=<span class="string">"hw-layer"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content-hidden"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"hw-layer-wrap"</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">					<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-12 col-sm-12"</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">h4</span>&gt;</span>纯粹的弹出层<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">p</span>&gt;</span>这是HTML+CSS+Javascript实现的一个弹出层效果，采用了响应式布局，希望玩的开心！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">						<span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-success hwLayer-ok"</span>&gt;</span>确 定<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-warning hwLayer-cancel"</span>&gt;</span>取 消<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意<code>data-show-layer</code>用来绑定弹出层，另外使用<code>href</code>同样可以。需要给div注册一个ID。</p>
+<h3 id="完成html结构后我们来关注表现层的css。"><a href="#完成html结构后我们来关注表现层的css。" class="headerlink" title="完成html结构后我们来关注表现层的css。"></a>完成html结构后我们来关注表现层的css。</h3><p>我们需要考虑到弹出层和背景之间情况。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-class">.hw-overlay</span> &#123;</span><br><span class="line"><span class="comment">/*背景层*/</span>  </span><br><span class="line">    <span class="attribute">display</span>: none;</span><br><span class="line">    <span class="attribute">position</span>: fixed;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(0, 0, 0, 0.9);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>背景层用rgba调整透明度来体现差异效果。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content-hidden</span> &#123;</span><br><span class="line"><span class="comment">/*弹出层父容器*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>弹出层的垂直居中布局。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.hw-layer-wrap</span> &#123;</span><br><span class="line"><span class="comment">/*弹出层本尊*/</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">570px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">1px</span> <span class="number">2px</span> <span class="number">4px</span> <span class="number">0</span> <span class="built_in">rgba</span>(0, 0, 0, 0.12);</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">45px</span> <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后给弹出层一点润色效果。至此我们完成了css部分的工作。</p>
+<h3 id="现在我们考虑使用js来监听用户行为，以此来操作dom达到效果。"><a href="#现在我们考虑使用js来监听用户行为，以此来操作dom达到效果。" class="headerlink" title="现在我们考虑使用js来监听用户行为，以此来操作dom达到效果。"></a>现在我们考虑使用js来监听用户行为，以此来操作dom达到效果。</h3><p>我采用了jquery，主要考虑到描述清晰，以及一些动态效果方便我们调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//弹出层</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">showLayer</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> layer = $(<span class="string">'#'</span>+id),</span><br><span class="line">			layerwrap = layer.find(<span class="string">'.hw-layer-wrap'</span>);</span><br><span class="line">		layer.fadeIn();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//隐藏层</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hideLayer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		$(<span class="string">'.hw-overlay'</span>).fadeOut();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//绑定按钮</span></span><br><span class="line">	$(<span class="string">'.hwLayer-ok,.hwLayer-cancel,.hwLayer-close'</span>).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		hideLayer();</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//触发弹出层</span></span><br><span class="line">	$(<span class="string">'.show-layer'</span>).on(<span class="string">'click'</span>,  <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> layerid = $(<span class="keyword">this</span>).data(<span class="string">'show-layer'</span>);</span><br><span class="line">		showLayer(layerid);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//点击或者触控弹出层外的遮罩层，关闭弹出层</span></span><br><span class="line">	$(<span class="string">'.hw-overlay'</span>).on(<span class="string">'click'</span>,  <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (event.target == <span class="keyword">this</span>)&#123;</span><br><span class="line">			hideLayer();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//按ESC键关闭弹出层</span></span><br><span class="line">	$(<span class="built_in">document</span>).keyup(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (event.keyCode == <span class="number">27</span>) &#123;</span><br><span class="line">			hideLayer();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>整体的思路就是用事件来驱动表现，监听行为调用相应函数即可。大家可以根据注释理解代码。十分简单。调用了两个动效来增加用户体验，用原生的js或者css3效果同样可以实现。</p>
+<p>至此我们完成了全部的设计工作。思路就是前文所提到的<strong>用html来进行结构的语义化表达，css来提供表现，js来监听用户行为。</strong><br>相较于其他的一些弹出层设计，这个设计不需要重新去渲染dom，减少了性能上的开销，仅仅只是用<code>display:none</code>来隐藏了容器。</p>
+<p>以后有空会把他封装起来，作为一个组件来调用。实现的过程中参考了一些博文的内容。<br>完结～感谢阅读，请指正。</p>
+<p><a href="https://github.com/awesomeric/modalbox" target="_blank" rel="external">github地址</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <!--  -->
+
+  <section id="comments">
+<!--高速版，加载速度快，使用前需测试页面的兼容性-->
+<div id="SOHUCS" sid="一个简单的弹出层设计思路"></div>
+<script>
+  (function(){
+    var appid = 'cysNTCuWp',
+    conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
+    var doc = document,
+    s = doc.createElement('script'),
+    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+    s.type = 'text/javascript';
+    s.charset = 'utf-8';
+    s.src =  'https://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+    h.insertBefore(s,h.firstChild);
+    window.SCS_NO_IFRAME = true;
+  })()
+</script>
+  </section>
+  
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/awesomeric" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                 <p class="copyright text-muted">copyright®2016</p>
+                <p class="copyright text-muted">Adapted for EricTang</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
