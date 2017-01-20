@@ -13,11 +13,11 @@
 
     <title>
         
-          自我介绍 - EFE labs
+          Welcome to Hux Blog - EFE labs
         
     </title>
 
-    <link rel="canonical" href="https://awesomeric.github.io/archives/about/">
+    <link rel="canonical" href="https://awesomeric.github.io/archives/2014/01/29/我是这样走上前端这条不归路的/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -130,133 +130,91 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/main.png')">
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://awesomeric.github.io/archives/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('post-bg-2015.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>自我介绍</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">我走过山时山不说话 我路过海时海不说话</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
+                        
+                    </div>
+                    <h1>Welcome to Hux Blog</h1>
+                    <h2 class="subheading"> &quot;Hello World, Hello Blog&quot;</h2>
+                    <span class="meta">
+                        Posted by Hux on
+                        2014-01-29
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
-
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-                <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Myself</span>(<span class="params">name,age,contact</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.age = age;</span><br><span class="line">	<span class="keyword">this</span>.contact = contact;</span><br><span class="line">&#125;</span><br><span class="line">Myself.prototype.method = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'hello,this is my simple introduction'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> me = mew Myself(<span class="string">'EricTang'</span>,<span class="number">22</span>,<span class="string">'bravesuperking@gmail.com'</span>);</span><br></pre></td></tr></table></figure>
+                <p>这个话题对于我来说一直是十分想说的一件事情，但是因为我个人的原因（懒）以及平时工作的缘由久久不能下笔，今天先起个头，以后我持续更新我的前端和生活方面的趣事，也算是对于平时生活的一个总结，老司机们，快一起上车吧。<br>为了便于叙述，我准备采用时间线的方式，也为跟我有类似生涯轨迹的同学一点启发。</p>
+<h3 id="大三"><a href="#大三" class="headerlink" title="大三"></a>大三</h3><hr>
+<p>其实最开始我是拒绝前端的，大三那年苹果风华正茂，而苹果是我一直崇拜的公司，社会的舆论也比较看好<code>iOS</code>开发，于是我跟着大家一起进入iOS的开发领域。也跟着慕课网的教程做了几个比较小的应用部署在iPhone和Apple watch上面，当时拿给朋友们玩耍时收获了不少的赞扬让那时候的我倍感高兴，虽然是计算机专业的学生，但一直对程序员这个概念不太明确，不过在那一个时间点却体会到作为程序员的一种快乐。<br>然而，我的前端之路却应该从另一件比较奇葩的事情说起。<br>朋友的想做一个二手交易的网站，我稍微懂一些html，于是我们就一起做了个网站除出来玩玩（现在这个网站貌似还可以访问<a href="http://www.tinyshop.top" target="_blank" rel="external">点我</a>，不过bootstrap那版后来烂尾了，没想到在网站上线的时候我意识到网站才是真正的具有一种跨平台表现力的东西，无论是iOS还是android，都有平台的局限性，而web程序只要你拥有具有浏览器的设备就可以访问，而不用去为了不同的平台设计不同的版本，这真是太酷了。</p>
+
+
+                <hr>
+
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/06/22/js字符串处理问题（一）/" data-toggle="tooltip" data-placement="top" title="js字符串处理问题（一）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                </ul>
 
                 <div id="cyReward" role="cylabs" data-use="reward" style="margin-left: 40.5%;"></div>
-                                  <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
-                                  <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
-                                  <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+                    <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+                    <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+                    <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
                     <script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/lib/jquery.js"></script>
                     <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysNTCuWp"></script>
-                <hr>
-                <!-- 如果开启评论功能 -->
+
                 
-                    <hr>
-                    <section id="comments">
-                  <!--高速版，加载速度快，使用前需测试页面的兼容性-->
-                  <div id="SOHUCS" sid="自我介绍"></div>
-                  <script>
-                    (function(){
-                      var appid = 'cysNTCuWp',
-                      conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
-                      var doc = document,
-                      s = doc.createElement('script'),
-                      h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
-                      s.type = 'text/javascript';
-                      s.charset = 'utf-8';
-                      s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
-                      h.insertBefore(s,h.firstChild);
-                      window.SCS_NO_IFRAME = true;
-                    })()
-                  </script>
-                    </section>
-
-
 
                 
 
             </div>
+    <!-- Side Catalog Container -->
+        
+
     <!-- Sidebar Container -->
+
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
-
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-
-                        
-                            <img src="/img/avatar.jpg" />
-                        
-
-                        
-                            <p>只想记录生活</p>
-                        
-
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.zhihu.com/people/eric-tang-46">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-
-                            
-
-                            
-                                <li>
-                                    <a target="_blank"  href="https://github.com/awesomeric">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-
-                            
-                        </ul>
-                    </div>
-                </section>
 
                 <!-- Friends Blog -->
                 
@@ -272,9 +230,19 @@
                 </ul>
                 
             </div>
-        
+
+        </div>
     </div>
-</div>
+</article>
+
+
+
+
+
+
+
+
+
 
 
     <!-- Footer -->
