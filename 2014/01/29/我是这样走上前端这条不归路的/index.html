@@ -13,7 +13,7 @@
 
     <title>
         
-          Welcome to Hux Blog - EFE labs
+          我的前端之路 - EFE labs
         
     </title>
 
@@ -138,7 +138,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('post-bg-2015.jpg')
+        background-image: url('jsv.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -151,10 +151,10 @@
                           <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
                     </div>
-                    <h1>Welcome to Hux Blog</h1>
-                    <h2 class="subheading"> &quot;Hello World, Hello Blog&quot;</h2>
+                    <h1>我的前端之路</h1>
+                    <h2 class="subheading"> &quot;Hello World, Hello FE&quot;</h2>
                     <span class="meta">
-                        Posted by Hux on
+                        Posted by eric on
                         2014-01-29
                     </span>
                 </div>
@@ -197,10 +197,29 @@
                     <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
                     <script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/lib/jquery.js"></script>
                     <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysNTCuWp"></script>
-
+                <hr>
                 
+                  <section id="comments">
+                <!--高速版，加载速度快，使用前需测试页面的兼容性-->
+                <div id="SOHUCS" sid="我的前端之路"></div>
+                <script>
+                  (function(){
+                    var appid = 'cysNTCuWp',
+                    conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
+                    var doc = document,
+                    s = doc.createElement('script'),
+                    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+                    s.type = 'text/javascript';
+                    s.charset = 'utf-8';
+                    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+                    h.insertBefore(s,h.firstChild);
+                    window.SCS_NO_IFRAME = true;
+                  })()
+                </script>
+                  </section>
+                  
 
-                
+
 
             </div>
     <!-- Side Catalog Container -->
@@ -234,8 +253,6 @@
         </div>
     </div>
 </article>
-
-
 
 
 
@@ -286,6 +303,7 @@
                 <p class="copyright text-muted">
                     Copyright &copy; EFE 2017
                     <br>
+                    <img 
                 </p>
             </div>
         </div>

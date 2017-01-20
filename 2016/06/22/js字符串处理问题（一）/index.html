@@ -192,7 +192,7 @@
                     
                     
                         <li class="next">
-                            <a href="/2014/01/29/我是这样走上前端这条不归路的/" data-toggle="tooltip" data-placement="top" title="Welcome to Hux Blog">Next Post &rarr;</a>
+                            <a href="/2014/01/29/我是这样走上前端这条不归路的/" data-toggle="tooltip" data-placement="top" title="我的前端之路">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -203,10 +203,29 @@
                     <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
                     <script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/lib/jquery.js"></script>
                     <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysNTCuWp"></script>
-
+                <hr>
                 
+                  <section id="comments">
+                <!--高速版，加载速度快，使用前需测试页面的兼容性-->
+                <div id="SOHUCS" sid="js字符串处理问题（一）"></div>
+                <script>
+                  (function(){
+                    var appid = 'cysNTCuWp',
+                    conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
+                    var doc = document,
+                    s = doc.createElement('script'),
+                    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+                    s.type = 'text/javascript';
+                    s.charset = 'utf-8';
+                    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+                    h.insertBefore(s,h.firstChild);
+                    window.SCS_NO_IFRAME = true;
+                  })()
+                </script>
+                  </section>
+                  
 
-                
+
 
             </div>
     <!-- Side Catalog Container -->
@@ -240,8 +259,6 @@
         </div>
     </div>
 </article>
-
-
 
 
 
@@ -292,6 +309,7 @@
                 <p class="copyright text-muted">
                     Copyright &copy; EFE 2017
                     <br>
+                    <img 
                 </p>
             </div>
         </div>
