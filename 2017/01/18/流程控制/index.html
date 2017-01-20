@@ -13,11 +13,11 @@
 
     <title>
         
-          JS流程控制实现 - EFE labs
+          JS流程控制 - EFE labs
         
     </title>
 
-    <link rel="canonical" href="https://awesomeric.github.io/archives/2017/01/18/JS流程控制实现/">
+    <link rel="canonical" href="https://awesomeric.github.io/archives/2017/01/18/流程控制/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -80,7 +80,7 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/">Home</a>
+                        <a href="/">主页</a>
                     </li>
 
                     
@@ -91,7 +91,7 @@
                         </li>
                         
                     
-                    
+
                 </ul>
             </div>
         </div>
@@ -149,7 +149,7 @@
                     <div class="tags">
                         
                     </div>
-                    <h1>JS流程控制实现</h1>
+                    <h1>JS流程控制</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by eric on
@@ -172,7 +172,13 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                
+                <p>最近认识的朋友发来一个题目来搞事情，说是微信前端面试的一道题，刚说了没几天，这题就上了掘金首页。这题目其实很有意思，而且对于逻辑也是一个很好的锻炼。</p>
+<hr>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>实现一个LazyMan，可以按照以下方式调用:<br>LazyMan(“Hank”)输出:<br>Hi! This is Hank!</p>
+<p>LazyMan(“Hank”).sleep(10).eat(“dinner”)输出<br>Hi! This is Hank!<br>//等待10秒..<br>Wake up after 10<br>Eat dinner~<br>LazyMan(“Hank”).eat(“dinner”).eat(“supper”)输出<br>Hi This is Hank!<br>Eat dinner~<br>Eat supper~<br>LazyMan(“Hank”).sleepFirst(5).eat(“supper”)输出<br>//等待5秒<br>Wake up after 5<br>Hi This is Hank!<br>Eat supper<br>以此类推。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>思路的核心其实就是构造一个<code>任务队列</code>，<br>将每个任务推入队列然后按照<code>先进先出</code>（FIFO）的原则去执行任务，<br>通过<code>.next()</code>方法实现任务执行。对于高优先级任务直接推入队伍首部<br>然后一些技术细节已经写到注释里面，请看代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_LazyMan</span>(<span class="params">userinput</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.tasks = [];<span class="comment">//构造任务队列</span></span><br><span class="line">    <span class="keyword">var</span> fn =(()=&gt;&#123;</span><br><span class="line">        <span class="keyword">return</span> ()=&gt;&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Hi! This is "</span> + userinput + <span class="string">"!"</span>);</span><br><span class="line">            <span class="keyword">this</span>.next();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)();</span><br><span class="line">    <span class="keyword">this</span>.tasks.push(fn);<span class="comment">//进入任务队列</span></span><br><span class="line">    setTimeout(()=&gt;&#123;</span><br><span class="line">        <span class="keyword">this</span>.next();</span><br><span class="line">    &#125;, <span class="number">0</span>); <span class="comment">// 在下一个事件循环启动任务</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事件调度函数 */</span></span><br><span class="line">_LazyMan.prototype.next = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fn = <span class="keyword">this</span>.tasks.shift();<span class="comment">//移除任务队列</span></span><br><span class="line">    fn &amp;&amp; fn(); <span class="comment">//如果fn有返回任务则执行fn函数</span></span><br><span class="line">&#125;</span><br><span class="line">_LazyMan.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fn =((name)=&gt;&#123;</span><br><span class="line">        <span class="keyword">return</span> ()=&gt;&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Eat "</span> + name + <span class="string">"~"</span>);</span><br><span class="line">            <span class="keyword">this</span>.next()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)(name);</span><br><span class="line">    <span class="keyword">this</span>.tasks.push(fn);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">// 实现链式调用</span></span><br><span class="line">&#125;</span><br><span class="line">_LazyMan.prototype.sleep = <span class="function"><span class="keyword">function</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fn = ((time)=&gt;&#123;</span><br><span class="line">        <span class="keyword">return</span> ()=&gt; &#123;</span><br><span class="line">            setTimeout(()=&gt;&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"Wake up after "</span> + time + <span class="string">"s!"</span>);</span><br><span class="line">                <span class="keyword">this</span>.next();</span><br><span class="line">            &#125;, time * <span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)(time);</span><br><span class="line">    <span class="keyword">this</span>.tasks.push(fn);</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 优先级任务</span></span><br><span class="line">_LazyMan.prototype.sleepFirst = <span class="function"><span class="keyword">function</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fn = ((time)=&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> ()=&gt; &#123;</span><br><span class="line">            setTimeout(()=&gt; &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"Wake up after "</span> + time + <span class="string">"s!"</span>);</span><br><span class="line">                <span class="keyword">this</span>.next();</span><br><span class="line">            &#125;, time * <span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)(time);</span><br><span class="line">    <span class="keyword">this</span>.tasks.unshift(fn);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LazyMan</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> _LazyMan(name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LazyMan(<span class="string">'eric'</span>).eat(<span class="string">"static"</span>).sleep(<span class="number">3</span>);</span><br><span class="line">LazyMan(<span class="string">"eric"</span>).eat(<span class="string">'shit'</span>).sleep(<span class="number">1</span>);</span><br><span class="line">LazyMan(<span class="string">'tyc'</span>);</span><br></pre></td></tr></table></figure>
+
 
                 <hr>
 
@@ -181,7 +187,7 @@
                     
                     
                         <li class="next">
-                            <a href="/2016/11/16/一个简单的弹出层设计思路/" data-toggle="tooltip" data-placement="top" title="一个简单的弹出层设计思路">Next Post &rarr;</a>
+                            <a href="/2016/11/16/一个简单的弹出层设计思路/" data-toggle="tooltip" data-placement="top" title="一个简单的弹出层设计思路">一个简单的弹出层设计思路 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -196,7 +202,7 @@
                 
                   <section id="comments">
                 <!--高速版，加载速度快，使用前需测试页面的兼容性-->
-                <div id="SOHUCS" sid="JS流程控制实现"></div>
+                <div id="SOHUCS" sid="JS流程控制"></div>
                 <script>
                   (function(){
                     var appid = 'cysNTCuWp',
@@ -240,6 +246,8 @@
                         <li><a href="http://http://coolmogu.com/" target="_blank">一只很酷的蘑菇</a></li>
                     
                         <li><a href="http://www.chenfx.com.cn/" target="_blank">嘿，高衙锅</a></li>
+                    
+                        <li><a href="undefined" target="_blank">undefined</a></li>
                     
                 </ul>
                 
