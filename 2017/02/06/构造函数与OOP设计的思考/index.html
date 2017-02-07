@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword"  content="undefined">
+    <meta name="baidu-site-verification" content="7ASsZWKapH" />
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          一些构造函数的学习整理 - EFE labs
+        
+    </title>
+
+    <link rel="canonical" href="https://awesomeric.github.io/archives/2017/02/06/构造函数与OOP设计的思考/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">EFE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+
+                    
+
+                        
+                        <li>
+                            <a href="/about/">自我介绍</a>
+                        </li>
+                        
+                    
+
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://awesomeric.github.io/archives/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/main.png')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#JS基础" title="JS基础">JS基础</a>
+                        
+                    </div>
+                    <h1>一些构造函数的学习整理</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by eric on
+                        2017-02-06
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>转载需注明：<strong>前端唐小胖</strong></p>
+<p>最近对于前端的学习主要还是以熟悉公司技术栈及开发经验，对于javascript的一些基础知识有些遗忘，我于是重新看起了红宝书，结合几个月的撸码有了一些自己新的思考，在这里总结一下。</p>
+<p>javascript是一个面向对象的语言，但是直到ES6才有了class的概念，这是他区别与其他oop语言的一个特点。</p>
+<h2 id="理解javascript中的对象"><a href="#理解javascript中的对象" class="headerlink" title="理解javascript中的对象"></a>理解javascript中的对象</h2><p>这是最原始的创造对象的方法：<br>使用<code>Object构造函数</code>创建<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> person = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">person.name = <span class="string">'eric'</span>;</span><br><span class="line">persion.age = <span class="string">'23'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>现在常见的创造对象的方式<code>对象字面量</code>表示<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> person = &#123;</span><br><span class="line">name:<span class="string">"eric"</span>,</span><br><span class="line">age:<span class="string">"29"</span>,</span><br><span class="line">sayname:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>虽然Object构造函数和对象字面量都可以创造单个对象，但是我们利用单个接口创造的对象会产生大量重复的代码造成环境的效率低下，为了解决这个问题我们的前辈们想出了各种套路来解决，<br>我来梳理一下常用的几种套路。</p>
+<h3 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1.工厂模式"></a>1.工厂模式</h3><hr>
+<p>抽象创建对象的过程<br>用函数来封装以特定接口创建对象的细节</p>
+<p><strong>优点</strong>：解决了代码重复书写的麻烦<br><strong>缺点</strong>：不能识别对象（不知道对象的类型）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name,age,sex</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> obj = &#123;</span><br><span class="line">    name:name,</span><br><span class="line">    age:age,</span><br><span class="line">    sex:sex,</span><br><span class="line">    skill:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">" is a coder!"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person1 = createPerson(<span class="string">'eric'</span>,<span class="number">23</span>,<span class="string">'man'</span>);</span><br><span class="line"><span class="keyword">let</span> person2 = createPerson(<span class="string">'tang'</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-自定义构造函数模式"><a href="#2-自定义构造函数模式" class="headerlink" title="2.自定义构造函数模式"></a>2.自定义构造函数模式</h3><hr>
+<p>不显式的创建对象，使用<code>new</code>操作符<br><strong>优点</strong>：解决了对象的识别问题，可以将构造函数的实例对象标记为特定类型<br><strong><strong>缺点</strong></strong>：多次复用的方法在每个实例对象中反复创建，导致相同方法产生在不同作用域链和多次标示符解析，简单来说导致内存被无谓的消耗。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,sex</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.age = age;</span><br><span class="line">  <span class="keyword">this</span>.sex = sex;</span><br><span class="line">  <span class="keyword">this</span>.skill = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">" is a coder!"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person1 = <span class="keyword">new</span> Person(<span class="string">'eric'</span>,<span class="number">23</span>,<span class="string">'man'</span>);</span><br><span class="line"><span class="keyword">let</span> person2 = <span class="keyword">new</span> Person(<span class="string">'tang'</span>,<span class="number">23</span>,<span class="string">'man'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//对象类型名称为myObj，解决了识别的问题，用下面方法可以验证</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.constructor === Person &amp;&amp; person2 <span class="keyword">instanceof</span> Person &amp;&amp; person2 <span class="keyword">instanceof</span> <span class="built_in">Object</span>);<span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="3-原型模式"><a href="#3-原型模式" class="headerlink" title="3.原型模式"></a>3.原型模式</h3><hr>
+<p>我们创造的每一个函数都有一个<code>prototype</code>（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的用途是包含了可以由特定类型的实例对象共享的属性和方法。于是我们可以不在<br>构造函数中定义对象实例的信息，而是将其加入原型链中。<br><strong>优点</strong>：复用方法挂在原型对象上面，所有的构造函数实例对象都可以共享原型下的属性和方法，使代码空间和内存得到优化<br><strong>缺点</strong>：实例对象失去本身的特点，公用一套属性和方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//空空如也</span></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.name =<span class="string">'eric'</span>;</span><br><span class="line">Person.prototype.age = <span class="string">'23'</span>;</span><br><span class="line">Person.prototype.method = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'be a coder'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> person1 =  <span class="keyword">new</span> Person();</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-最常用的模式：构造函数-原型模式"><a href="#4-最常用的模式：构造函数-原型模式" class="headerlink" title="4.最常用的模式：构造函数+原型模式"></a>4.最常用的模式：构造函数+原型模式</h3><hr>
+<p>最为常用的创建对象的方式，结合两种模式的优点，<br>实现对象属性的封装和对象方法的复用，<br>平衡了对象的独立性和多态复用节省内存的问题。<br>几乎成为最广泛的定义构造函数方法，广泛使用于工作中。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name =name;</span><br><span class="line">    <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.skill = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'be a coder'</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 =  <span class="keyword">new</span> Person(<span class="string">'eric'</span>,<span class="number">23</span>);</span><br><span class="line"><span class="keyword">var</span> person2 =  <span class="keyword">new</span> Person(<span class="string">'tang'</span>,<span class="number">23</span>);</span><br><span class="line"><span class="comment">//相同方法的复用，避免作用域的反复声明</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.skill == person2.skill);</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-动态原型模式"><a href="#5-动态原型模式" class="headerlink" title="5.动态原型模式"></a>5.动态原型模式</h3><hr>
+<p>该方法把所有信息都封装在构造函数中，通过检查某个应该存在的方法是否有效，来决定是否需要初始化原型。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">  <span class="keyword">this</span>.age = age;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.skill != <span class="string">"function"</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    Person.prototype.skill = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"be a coder"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person1 =  <span class="keyword">new</span> Person(<span class="string">'tang'</span>,<span class="number">23</span>);</span><br><span class="line">person1.skill();</span><br></pre></td></tr></table></figure></p>
+<p>只有当该方法不存在的时候才会将其添加到原型对象上面，而后其所有的实例对象都可以享用这个方法，任何实例对象都可以立即使用这个方法。是一种非常灵活的方案。</p>
+<h3 id="6-寄生构造函数模式"><a href="#6-寄生构造函数模式" class="headerlink" title="6.寄生构造函数模式"></a>6.寄生构造函数模式</h3><hr>
+<p>其实就是工厂模式+new操作符的一种变体，由于这个方案返回的对象与其构造函数和原型对象都无关系，不能使用instanceof来确认对象的类型，因此这个方法不被红宝书推荐，我觉得仅仅在<br>某些原生构造函数不能修改的时候可以用这个方法在原构造函数下增加一种类工厂模式的构造函数，这大概就是其寄生的含义。</p>
+<h3 id="7-稳妥构造函数"><a href="#7-稳妥构造函数" class="headerlink" title="7.稳妥构造函数"></a>7.稳妥构造函数</h3><hr>
+<p>所谓稳妥对象，指的是一些安全环境中（禁用this和new）构造函数的实例对象的名称。可使用工厂模式符合这一要求，工作中几乎很难用到，所以不展开介绍了。</p>
+<p>（完）转载需注明：<strong>前端唐小胖</strong></p>
+
+
+                <hr>
+
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/01/18/流程控制/" data-toggle="tooltip" data-placement="top" title="JS流程控制">JS流程控制 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <div id="cyReward" role="cylabs" data-use="reward" style="margin-left: 40.5%;"></div>
+                    <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
+                    <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
+                    <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
+                    <script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/lib/jquery.js"></script>
+                    <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysNTCuWp"></script>
+                <hr>
+                
+                  <section id="comments">
+                <!--高速版，加载速度快，使用前需测试页面的兼容性-->
+                <div id="SOHUCS" sid="一些构造函数的学习整理"></div>
+                <script>
+                  (function(){
+                    var appid = 'cysNTCuWp',
+                    conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
+                    var doc = document,
+                    s = doc.createElement('script'),
+                    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+                    s.type = 'text/javascript';
+                    s.charset = 'utf-8';
+                    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+                    h.insertBefore(s,h.firstChild);
+                    window.SCS_NO_IFRAME = true;
+                  })()
+                </script>
+                  </section>
+                  
+
+
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://http://coolmogu.com/" target="_blank">一只很酷的蘑菇</a></li>
+                    
+                        <li><a href="http://www.chenfx.com.cn/" target="_blank">嘿，高衙锅</a></li>
+                    
+                        <li><a href="http://shudery.cn/" target="_blank">达哥的博客</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/eric-tang-46">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/awesomeric">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; EFE 2017
+                    <br>
+                    <img 
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://awesomeric.github.io/archives/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://awesomeric.github.io/archives/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
