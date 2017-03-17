@@ -212,7 +212,7 @@
                 <p>平时在开发的时候常常需要操作节点，每次遇到需要注入内容的时候总是把这二者弄混淆，然后又要去查查api，所以是时候做个了结。</p>
 <h3 id="一、createTextNode-例如"><a href="#一、createTextNode-例如" class="headerlink" title="一、createTextNode 例如:"></a>一、<code>createTextNode</code> 例如:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">element.className = <span class="string">"message"</span>;</span><br><span class="line"><span class="keyword">var</span> textNode = <span class="built_in">document</span>.createTextNode(<span class="string">"&lt;Strong&gt;Hello&lt;/Strong&gt;"</span>);</span><br><span class="line">element.appendChild(textNode);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(element);</span><br></pre></td></tr></table></figure>
 <p>结果: <strong>Hello</strong></p>
-<p>二、<code>innerHTML</code> 例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &gt; <span class="xml"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">"h2"</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"h2"</span>).innerHTML = <span class="string">"&lt;strong&gt;hello&lt;/strong&gt;"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>二、<code>innerHTML</code> 例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &gt; &lt;h2 id="h2"&gt;&lt;/h2&gt;&lt;/div&gt;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"h2"</span>).innerHTML = <span class="string">"&lt;strong&gt;hello&lt;/strong&gt;"</span>;</span><br></pre></td></tr></table></figure></p>
 <p>结果: Hello 识别成加粗的黑体</p>
 <p>三、区别</p>
 <p><code>innerHTML</code>和<code>createTextNode</code>都可以把一段内容添加到一个节点中，区别是如果这段内容中有html标签（如例子中的<strong></strong>）时表现就不同了，在createTextNode中会当作文本处理，不会被浏览器解析，但用innerHTML就会被当作HTML代码处理（如你的例子中Hello会被加粗显示）。<br>总的来说，<strong>如果你确定要插入的内容中没有html标签，可以用innerHTML</strong>，这样更简洁，<strong>但如果不能确定（比如要插入用户输入的内容）建议用createTextNode的方式</strong>。</p>
@@ -440,7 +440,7 @@
 
 
 <!-- Image to hack wechat -->
-<img src="https://awesomeric.github.io/archives/img/icon_wechat.png" width="0" height="0" />
+<!-- <img src="https://awesomeric.github.io/archives/img/icon_wechat.png" width="0" height="0" /> -->
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 </body>
