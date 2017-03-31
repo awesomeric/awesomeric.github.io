@@ -14,11 +14,11 @@
 
     <title>
         
-          innerHTML和createTextNode - EFE labs
+          30行实现一个简易可扩展node爬虫 - EFE labs
         
     </title>
     <!-- <link href="../../source/css/pace-theme-barber-shop.css" rel="stylesheet" /> -->
-    <link rel="canonical" href="https://awesomeric.github.io/archives/2016/11/08/innerHTML和createTextNode/">
+    <link rel="canonical" href="https://awesomeric.github.io/archives/2017/03/31/30行实现一个简易可扩展node爬虫/">
 
     <!-- pace.js -->
     <script src="/js/pace.min.js"></script>
@@ -185,14 +185,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#DOM操作" title="DOM操作">DOM操作</a>
+                          <a class="tag" href="/tags/#node.js" title="node.js">node.js</a>
                         
                     </div>
-                    <h1>innerHTML和createTextNode</h1>
+                    <h1>30行实现一个简易可扩展node爬虫</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by eric on
-                        2016-11-08
+                        2017-03-31
                     </span>
                 </div>
             </div>
@@ -211,13 +211,30 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>平时在开发的时候常常需要操作节点，每次遇到需要注入内容的时候总是把这二者弄混淆，然后又要去查查api，所以是时候做个了结。</p>
-<h3 id="一、createTextNode-例如"><a href="#一、createTextNode-例如" class="headerlink" title="一、createTextNode 例如:"></a>一、<code>createTextNode</code> 例如:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">element.className = <span class="string">"message"</span>;</span><br><span class="line"><span class="keyword">var</span> textNode = <span class="built_in">document</span>.createTextNode(<span class="string">"&lt;Strong&gt;Hello&lt;/Strong&gt;"</span>);</span><br><span class="line">element.appendChild(textNode);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(element);</span><br></pre></td></tr></table></figure>
-<p>结果: <strong>Hello</strong></p>
-<p>二、<code>innerHTML</code> 例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &gt; <span class="xml"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">"h2"</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"h2"</span>).innerHTML = <span class="string">"&lt;strong&gt;hello&lt;/strong&gt;"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>结果: Hello 识别成加粗的黑体</p>
-<p>三、区别</p>
-<p><code>innerHTML</code>和<code>createTextNode</code>都可以把一段内容添加到一个节点中，区别是如果这段内容中有html标签（如例子中的<strong></strong>）时表现就不同了，在createTextNode中会当作文本处理，不会被浏览器解析，但用innerHTML就会被当作HTML代码处理（如你的例子中Hello会被加粗显示）。<br>总的来说，<strong>如果你确定要插入的内容中没有html标签，可以用innerHTML</strong>，这样更简洁，<strong>但如果不能确定（比如要插入用户输入的内容）建议用createTextNode的方式</strong>。</p>
+                <blockquote>
+<p>转载需注明：<strong>前端唐小胖</strong></p>
+</blockquote>
+<p>很久没有更新自己的博客了，稍微写一点自己最近的收获。这篇文章会写的很详细，希望你阅读完以后可以自己动手做一个属于自己的爬虫。<br>毕竟，他只要三十行对吧😄</p>
+<h2 id="预备介绍"><a href="#预备介绍" class="headerlink" title="预备介绍"></a>预备介绍</h2><p>我对于爬虫的理解是一种模拟人的行为去访问网站，然后将浏览的内容进行收集的工具。<br>他的好处在于替代人去访问大量的信息，并根据人制定的规则返回需要的内容。大大提高了我们的工作生活效率。</p>
+<h2 id="环境搭建及模块介绍"><a href="#环境搭建及模块介绍" class="headerlink" title="环境搭建及模块介绍"></a>环境搭建及模块介绍</h2><p>其实文章的标题的确只是一波套路，要做一个健壮的爬虫需要考虑的东西很多，代码更是远远超过三十行。<br>你需要考虑到你的爬虫所处的场景，如果你的爬虫是全站级别的爬虫，就需要考虑到网站本身对于爬虫的友好性，以及网站的DOM结构对于爬虫的影响。对于爬取内容的除杂和数据包装等。<br>不过任何的大型项目都是从一个小的idea启发而生，所以笔者还是要实现自己的诺言，用三十行完成一个简单的爬虫。</p>
+<h4 id="需要的node模块"><a href="#需要的node模块" class="headerlink" title="需要的node模块"></a>需要的node模块</h4><ul>
+<li>http</li>
+<li>cheerio</li>
+</ul>
+<p>是的，仅仅npm安装这两个模块即可。<br>稍微介绍一下这两个有名的模块，不懂的同学可以顺便学一下以后其他的项目也可能会需要它们</p>
+<ul>
+<li>http模块<br>nodejs中的http模块中封装了一个HTPP服务器和一个简易的HTTP客户端，<br>http.Server是一个基于事件的http服务器，http.request则是一个http客户端工具，用于向http服务器发起请求。<br>这次我们就将使用http.request向目标网站发起请求。</li>
+<li>cheerio模块<br>cheerio是nodejs的抓取页面模块，为服务器特别定制的，快速、灵活、实施的jQuery核心实现。适合各种Web爬虫程序。</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>我将用我同事的博客作为我们的爬取目标，同事的博客<a href="http://coolmogu.com/" target="_blank" rel="external">地址</a>。是一个萌妹子哦，大家可以顺路关注一波她的博客。<br>看代码吧。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">"cheerio"</span>);</span><br><span class="line"><span class="keyword">const</span> baseUrl = <span class="string">"http://coolmogu.com/"</span>;</span><br><span class="line"><span class="keyword">let</span> articleUrls = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 访问博客地址</span></span><br><span class="line">http.get(<span class="string">"http://coolmogu.com/"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> html = <span class="string">""</span>;</span><br><span class="line">    res.on(<span class="string">"data"</span> ,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"开始获取作者主页信息..."</span>);</span><br><span class="line">        html += data;</span><br><span class="line">        <span class="comment">// 接受对方服务器返回数据</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    res.on(<span class="string">"end"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 连接结束返回</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"获取作者主页信息成功~"</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"=========="</span>);</span><br><span class="line">        getArticleUrls(html);</span><br><span class="line">        <span class="built_in">console</span>.log(articleUrls);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;).on(<span class="string">"error"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"获取作者主页信息出错!"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getArticleUrls</span> (<span class="params">html</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> $ = cheerio.load(html);</span><br><span class="line">    使用cheerio筛选需要的数据</span><br><span class="line">    <span class="keyword">let</span> titles = $(<span class="string">".post-title a"</span>);</span><br><span class="line">    <span class="comment">// console.log(titles);</span></span><br><span class="line">    titles.map(<span class="function"><span class="keyword">function</span>(<span class="params">index</span>)</span>&#123;</span><br><span class="line">    将结果储存到数组中</span><br><span class="line">        articleUrls.push($(<span class="keyword">this</span>).attr(<span class="string">"href"</span>));</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>至此我们就完成了一个三十行的node爬虫，我们成功的得到了萌妹子博客首页的每个文章的详细列表，后续可以利用这个地址对博客的每一个文章进行详细的爬取，<br>从而一个可扩展的node爬虫就完成了，其实根本不需要30行，但是需要意识到这只是一个爬虫的开始，有很多需要完善的地方，后续会对博客的详情页爬取进行介绍，<br>包含</p>
+<ul>
+<li>详情页内容爬取</li>
+<li>输出爬取内容</li>
+<li>翻页逻辑处理</li>
+<li>文章内容除杂</li>
+</ul>
+<p>请保持关注😄<br>转载需注明：<strong>前端唐小胖</strong></p>
 
 
                 <hr>
@@ -225,13 +242,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2016/11/16/一个简单的弹出层设计思路/" data-toggle="tooltip" data-placement="top" title="一个简单的弹出层设计思路">&larr; 一个简单的弹出层设计思路</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2016/08/23/闭包知识汇总/" data-toggle="tooltip" data-placement="top" title="闭包知识汇总">闭包知识汇总 &rarr;</a>
+                            <a href="/2017/02/06/构造函数与OOP设计的思考/" data-toggle="tooltip" data-placement="top" title="一些构造函数的学习整理">一些构造函数的学习整理 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -246,7 +259,7 @@
                 
                   <section id="comments">
                 <!--高速版，加载速度快，使用前需测试页面的兼容性-->
-                <div id="SOHUCS" sid="innerHTML和createTextNode"></div>
+                <div id="SOHUCS" sid="30行实现一个简易可扩展node爬虫"></div>
                 <script>
                   (function(){
                     var appid = 'cysNTCuWp',

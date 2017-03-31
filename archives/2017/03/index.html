@@ -14,11 +14,11 @@
 
     <title>
         
-          innerHTML和createTextNode - EFE labs
+          EFE labs
         
     </title>
     <!-- <link href="../../source/css/pace-theme-barber-shop.css" rel="stylesheet" /> -->
-    <link rel="canonical" href="https://awesomeric.github.io/archives/2016/11/08/innerHTML和createTextNode/">
+    <link rel="canonical" href="https://awesomeric.github.io/archives/archives/2017/03/">
 
     <!-- pace.js -->
     <script src="/js/pace.min.js"></script>
@@ -167,147 +167,7 @@
 
 
     <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
-<!-- <img src="https://awesomeric.github.io/archives/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
-
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        background-image: url('/img/main.png')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                          <a class="tag" href="/tags/#DOM操作" title="DOM操作">DOM操作</a>
-                        
-                    </div>
-                    <h1>innerHTML和createTextNode</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta">
-                        Posted by eric on
-                        2016-11-08
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-    <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-                <p>平时在开发的时候常常需要操作节点，每次遇到需要注入内容的时候总是把这二者弄混淆，然后又要去查查api，所以是时候做个了结。</p>
-<h3 id="一、createTextNode-例如"><a href="#一、createTextNode-例如" class="headerlink" title="一、createTextNode 例如:"></a>一、<code>createTextNode</code> 例如:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">element.className = <span class="string">"message"</span>;</span><br><span class="line"><span class="keyword">var</span> textNode = <span class="built_in">document</span>.createTextNode(<span class="string">"&lt;Strong&gt;Hello&lt;/Strong&gt;"</span>);</span><br><span class="line">element.appendChild(textNode);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(element);</span><br></pre></td></tr></table></figure>
-<p>结果: <strong>Hello</strong></p>
-<p>二、<code>innerHTML</code> 例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &gt; <span class="xml"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">"h2"</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"h2"</span>).innerHTML = <span class="string">"&lt;strong&gt;hello&lt;/strong&gt;"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>结果: Hello 识别成加粗的黑体</p>
-<p>三、区别</p>
-<p><code>innerHTML</code>和<code>createTextNode</code>都可以把一段内容添加到一个节点中，区别是如果这段内容中有html标签（如例子中的<strong></strong>）时表现就不同了，在createTextNode中会当作文本处理，不会被浏览器解析，但用innerHTML就会被当作HTML代码处理（如你的例子中Hello会被加粗显示）。<br>总的来说，<strong>如果你确定要插入的内容中没有html标签，可以用innerHTML</strong>，这样更简洁，<strong>但如果不能确定（比如要插入用户输入的内容）建议用createTextNode的方式</strong>。</p>
-
-
-                <hr>
-
-
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/2016/11/16/一个简单的弹出层设计思路/" data-toggle="tooltip" data-placement="top" title="一个简单的弹出层设计思路">&larr; 一个简单的弹出层设计思路</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2016/08/23/闭包知识汇总/" data-toggle="tooltip" data-placement="top" title="闭包知识汇总">闭包知识汇总 &rarr;</a>
-                        </li>
-                    
-                </ul>
-
-                <div id="cyReward" role="cylabs" data-use="reward" style="margin-left: 40.5%;"></div>
-                    <!-- 代码2：用来读取评论框配置，此代码需放置在代码1之后。 -->
-                    <!-- 如果当前页面有评论框，代码2请勿放置在评论框代码之前。 -->
-                    <!-- 如果页面同时使用多个实验室项目，以下代码只需要引入一次，只配置上面的div标签即可 -->
-                    <script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/lib/jquery.js"></script>
-                    <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysNTCuWp"></script>
-                <hr>
-                
-                  <section id="comments">
-                <!--高速版，加载速度快，使用前需测试页面的兼容性-->
-                <div id="SOHUCS" sid="innerHTML和createTextNode"></div>
-                <script>
-                  (function(){
-                    var appid = 'cysNTCuWp',
-                    conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
-                    var doc = document,
-                    s = doc.createElement('script'),
-                    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
-                    s.type = 'text/javascript';
-                    s.charset = 'utf-8';
-                    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
-                    h.insertBefore(s,h.firstChild);
-                    window.SCS_NO_IFRAME = true;
-                  })()
-                </script>
-                  </section>
-                  
-
-
-
-            </div>
-    <!-- Side Catalog Container -->
-        
-
-    <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-
-                    
-                        <li><a href="http://www.coolmogu.com/" target="_blank">一只很酷的蘑菇</a></li>
-                    
-                        <li><a href="http://www.chenfx.com.cn/" target="_blank">嘿，高衙锅</a></li>
-                    
-                        <li><a href="http://shudery.cn/" target="_blank">达哥的博客</a></li>
-                    
-                </ul>
-                
-            </div>
-
-        </div>
-    </div>
-</article>
-
-
-
-
-
-
-
-
+    <!-- Default Archive layout, we use archives instead. -->
 
     <!-- Footer -->
     <!-- Footer -->
