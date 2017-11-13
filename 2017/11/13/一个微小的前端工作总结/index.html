@@ -14,11 +14,11 @@
 
     <title>
         
-          innerHTML和createTextNode - EFE labs
+          一个微小的前端工作总结 - EFE labs
         
     </title>
     <!-- <link href="../../source/css/pace-theme-barber-shop.css" rel="stylesheet" /> -->
-    <link rel="canonical" href="https://awesomeric.github.io/archives/2016/11/08/innerHTML和createTextNode/">
+    <link rel="canonical" href="https://awesomeric.github.io/archives/2017/11/13/一个微小的前端工作总结/">
 
     <!-- pace.js -->
     <script src="/js/pace.min.js"></script>
@@ -185,14 +185,12 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#DOM操作" title="DOM操作">DOM操作</a>
-                        
                     </div>
-                    <h1>innerHTML和createTextNode</h1>
+                    <h1>一个微小的前端工作总结</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by eric on
-                        2016-11-08
+                        2017-11-13
                     </span>
                 </div>
             </div>
@@ -211,13 +209,41 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>平时在开发的时候常常需要操作节点，每次遇到需要注入内容的时候总是把这二者弄混淆，然后又要去查查api，所以是时候做个了结。</p>
-<h3 id="一、createTextNode-例如"><a href="#一、createTextNode-例如" class="headerlink" title="一、createTextNode 例如:"></a>一、<code>createTextNode</code> 例如:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">element.className = <span class="string">"message"</span>;</span><br><span class="line"><span class="keyword">var</span> textNode = <span class="built_in">document</span>.createTextNode(<span class="string">"&lt;Strong&gt;Hello&lt;/Strong&gt;"</span>);</span><br><span class="line">element.appendChild(textNode);</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(element);</span><br></pre></td></tr></table></figure>
-<p>结果: <strong>Hello</strong></p>
-<p>二、<code>innerHTML</code> 例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &gt; <span class="xml"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">id</span>=<span class="string">"h2"</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"h2"</span>).innerHTML = <span class="string">"&lt;strong&gt;hello&lt;/strong&gt;"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>结果: Hello 识别成加粗的黑体</p>
-<p>三、区别</p>
-<p><code>innerHTML</code>和<code>createTextNode</code>都可以把一段内容添加到一个节点中，区别是如果这段内容中有html标签（如例子中的<strong></strong>）时表现就不同了，在createTextNode中会当作文本处理，不会被浏览器解析，但用innerHTML就会被当作HTML代码处理（如你的例子中Hello会被加粗显示）。<br>总的来说，<strong>如果你确定要插入的内容中没有html标签，可以用innerHTML</strong>，这样更简洁，<strong>但如果不能确定（比如要插入用户输入的内容）建议用createTextNode的方式</strong>。</p>
+                <p>转载需注明：<strong><a href="http://tangyc.top" target="_blank" rel="external">前端唐小胖</a></strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>很久没有更博了，最近玩的比较开心，原因是我从第一家公司辞职了，于是好好地放松了一段时间。差不多是时候了，决定继续回到前端的工作状态中来，那就以一个前公司一年的工作总结作为旧的结束和新的开始吧。</p>
+<blockquote>
+<p>既然是工作总结，那么我觉得就应该对工作的流程进行一个复盘，这样可以对工作进行一个很好的检索，找到以前不易察觉到的问题。同时对于一些渴望加入前端的新同学也能熟悉前端的开发流程是如何。</p>
+</blockquote>
+<h3 id="1-从排期开始"><a href="#1-从排期开始" class="headerlink" title="1.从排期开始"></a>1.从排期开始</h3><p>一般来说，当pm们完成他们的产品设计后，这个时候他们就会讲原型图画出来，此时会召集负责该项目的所有前后端聚在一起，开一个会来说明他的产品的意图。原型图会用axure等展示出来一个产品的大致功能。<br><img src="http://upload-images.jianshu.io/upload_images/5809653-e947f9f70b1a3079.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原型图类似这样"><br>开发们至此可以对项目有一个整体的感知，然后产品将原型图交与设计进行美化，最终前端根绝设计图进行还原。但是在这里就会遇到很多的坑，。我注意到很多同事（包括我自己233）对于排期会都不太重视，想着最后用设计图实现即可，就不听pm在这瞎bb了。实际上这种做法非常不好，因为开发的时候会遇到很多设计和pm都没有考虑到的问题，比如这里<code>是否单选，是否具有hover效果，如果用户提交了错误的信息应该如何处理</code>。前期如果不提出问题，只会增加自己的开发时间，最终导致加班。所以我们应该在排期的时候就把自己当作普通用户把流程走一遍，会遇到什么问题想清楚及时和pm进行沟通。</p>
+<p>###2. 设计图<br>得到设计图以后就可以开始按照设计图进行还原，这个地方同样需要注意的和原型图类似，要尽可能的考虑到细节，那些是用户体验上面会遇到的问题，应该如何展示。这些也需要及时和设计师进行沟通。<br>对于一些图片素材也可以委托设计师帮你裁剪，尽量优化自己的工作流。</p>
+<p>###3. 制作流程图<br>这个时候还没有到开始撸码的时候，我们应该制作一个项目详细的流程图，方便自己理清楚逻辑，现代前端并不仅仅对UI进行还原，有时候还需要完成一些后端的工作。例如我之前所在的这家公司，前端还需要自己使用Nodejs对controller层进行设计。<br>所以使用原型图可以理清楚每一次请求和路由之间的关系。整个项目的逻辑也可以一目了然。<br>这是我之前做一个项目自己画的流程图，当时一开始并没有制作流程图，觉得逻辑很简单，结果最后才发现逻辑并不简单。<br><img src="http://upload-images.jianshu.io/upload_images/5809653-a47b9858604d2945.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt=""><br>所以一定要养成画流程图的习惯，不一定要非常模式化的去画，而是去画一个你和你的同事都能明白逻辑的图即可。</p>
+<p>###4.具体实现<br>这个时候就可以开始你的表演了。<br>一般来说就是两种情况</p>
+<ul>
+<li>新项目（需要自己搭建环境）</li>
+<li>老项目（遵循前辈制定的规则）<br>先说简单一点的情况，老项目的持续开发。这就是让我们在别人的轮子上面继续跑，一个重点就是仔细阅读readme，一个合格的readme会解答你的大部分问题，所以当跑不起来项目的时候，首先阅读readme是不错的选择。而后才是去询问其他的同事，注意<a href="http://bbs.csdn.net/topics/390623576" target="_blank" rel="external">提问的艺术</a>。<br>差不多可以开始开发的时候，你也许会遇到这些情况。<h4 id="代码重构"><a href="#代码重构" class="headerlink" title="代码重构"></a>代码重构</h4></li>
+</ul>
+<ul>
+<li>觉得代码很烂。</li>
+<li>觉得代码可优化。</li>
+<li>觉得这是无用的文件。<br>但是我的忠告是不要试图去修改别人之前的代码，这要做会带来很多的问题，最严重的是导致功能失效，因为别人这样写的原因是兼容低版本浏览器或者服务器版本/具有语义的语法/一些不这样写会死的暗坑/等等。总之尽量不去修改那些与你无关的代码，如果需要修改，则请及时和代码作者沟通。</li>
+</ul>
+<h4 id="功能拆分，组件化"><a href="#功能拆分，组件化" class="headerlink" title="功能拆分，组件化"></a>功能拆分，组件化</h4><p>现代前端提倡组件化和代码可以复用，我们应该遵循这一个规则。把功能拆分，做到</p>
+<ul>
+<li>单一组件处理单一业务</li>
+<li>复杂逻辑尽量拆封成单一组件拼接。</li>
+<li>使单一组件具备通用性，可服用。</li>
+<li>组件具备良好的说明，I/O清晰可见。<br>简单来说就是小组件应该专注功能的实现，而一些大型的组件由小组件构筑，专注一套完整逻辑实现。<h5 id="语法规范"><a href="#语法规范" class="headerlink" title="语法规范"></a>语法规范</h5>尽可能的使你的代码具备可读性，即意味着你的代码清晰而干净，避免反复的嵌套，递归，如果需要用到复杂的语句，及时添加注释。<br>在每个文件头也写上注释，表明这个组件具备了怎样的功能。<br>如果项目允许的话，进行eslint检查，推荐使用airbnb的语法规范，你可以在此基础上面完成一个适用于你的项目的规则表，并合同事们一起去遵循它。这样会提高项目代码可读性。<br>抛出异常时候，仔细的定义你的错误信息，什么地方发什么原因的报错，可以在测试的时候帮你准确定位问题。<h5 id="代码安全性"><a href="#代码安全性" class="headerlink" title="代码安全性"></a>代码安全性</h5>这是个老生常谈的话题。需要注意的细节罗列如下</li>
+</ul>
+<ul>
+<li>xss</li>
+<li>csrf</li>
+<li>注意验证码<br>之前公司的验证组件和功能接口是解耦的，所以会导致csrf的风险。一个可行的方法是登陆组件提供了一个手机号存入cookie的加密字段，我们在node上面对数据用同样方式加密后将两个加密字符串进行比对，即可实现一个token校验的作用。</li>
+<li>提交表单<br>大多数情况是需要当前登录用的的id的，图方便，很多时候直接用了cookie里面的userid，此时，就容易造成在提交表单接口数据中把userid修改成其他任意用户的userid值，造成越权操作。在后端接口上注意使用框架层面userInfo.userId(对存储在cookie中的加密userKey值进行了解码操做)作为当前用户的userid就没问题</li>
+</ul>
+<p>一句话，基本防范先做好，敏感操作前台不做，全部在服务端做处理。</p>
+<h5 id="构建新项目"><a href="#构建新项目" class="headerlink" title="构建新项目"></a>构建新项目</h5><p>考虑到兼容性，同时要用工程化思想来构建项目。在搭建的时候就要考虑到静态资源的处理，组件化等等。<br>推荐使用工具来打包项目，如webpack和fis等等。<br>这个有时间会详细补充，因为这是一个系统性的话题，要考虑的点有很多。</p>
+<h5 id="5-上线前准备"><a href="#5-上线前准备" class="headerlink" title="5. 上线前准备"></a>5. 上线前准备</h5><p>到这个时候，就快要完成项目了，这个时候我们的项目应该会部署到测试环境中，这个时候要对公司的运维环境有一个基本的了解，这样可以在遇到问题的时候准确定位是什么环节出了问题，这个地方博主也是吃了很多的亏，经常代码没有问题，但是发布到测试环节的时候各种问题，要考虑一些常见的问题，服务器缓存记得清除，重启node服务器，看看是谁的接口阻碍了功能等等。排除万难后，至此可以完成项目的上线准备工作。</p>
+<h5 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h5><p>这应该就是一个完整的前端开发流程，也是我一年来工作的主要内容，可能不同公司用的技术和环境不一，但是万变不离其宗。<br>其实这系列流程每一个点展开都是很大的一门学问，我想做的是通过梳理这个流程，找到工作中还有那些可以优化的点，代码还有什么地方很烂。也算是一种不断提高技术的过程。</p>
 
 
                 <hr>
@@ -225,13 +251,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2016/11/16/一个简单的弹出层设计思路/" data-toggle="tooltip" data-placement="top" title="一个简单的弹出层设计思路">&larr; 一个简单的弹出层设计思路</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2016/08/23/闭包知识汇总/" data-toggle="tooltip" data-placement="top" title="闭包知识汇总">闭包知识汇总 &rarr;</a>
+                            <a href="/2017/06/01/使用双递归实现json串层级搜索算法/" data-toggle="tooltip" data-placement="top" title="使用双递归实现json串层级搜索算法">使用双递归实现json串层级搜索算法 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -244,25 +266,6 @@
                     <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysNTCuWp"></script>
                 <hr>
                 
-                  <section id="comments">
-                <!--高速版，加载速度快，使用前需测试页面的兼容性-->
-                <div id="SOHUCS" sid="innerHTML和createTextNode"></div>
-                <script>
-                  (function(){
-                    var appid = 'cysNTCuWp',
-                    conf = 'prod_b93a8305aefa9d6a5c6338df912091bc';
-                    var doc = document,
-                    s = doc.createElement('script'),
-                    h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
-                    s.type = 'text/javascript';
-                    s.charset = 'utf-8';
-                    s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
-                    h.insertBefore(s,h.firstChild);
-                    window.SCS_NO_IFRAME = true;
-                  })()
-                </script>
-                  </section>
-                  
 
 
 
